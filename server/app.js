@@ -1,14 +1,16 @@
 import express from 'express'
 import bodyParser from 'body-parser'
 
+import cors from 'cors'
 const app = express()
-
 
 // Middlewares
 
-app.use(bodyParser({
-    limit : "16kb"
+app.use(cors({
+    origin : process.env.CORS_ORIGIN,
+    credentials : true
 }))
+
 app.use(express.urlencoded({
     extended : true,
     limit : "16kb"
@@ -28,9 +30,11 @@ app.get("/", (req, res) => {
 
 
 // Routes
+import userRoutes from './routes/user.routes.js'
+import urlRoutes from "./routes/url.routes.js"
 
-app.use("/api/v1", routes);
-
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/url", urlRoutes);
 
 
 
