@@ -2,14 +2,13 @@
 import dotenv from 'dotenv'
 import chalk from 'chalk'
 
-
 import app from './app.js'
 import connectDB from './database/connectDB.js'
 
+dotenv.config()
+
 const PORT = process.env.PORT || 8000
 
-
-dotenv.config()
 
 
 connectDB()
