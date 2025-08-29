@@ -7,7 +7,7 @@ import dotenv from 'dotenv'
 
 export default async function connectDB(){
     try {
-        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}/${process.env.APPLICATION_NAME}`)
+        const connectionInstance = await mongoose.connect(`${process.env.MONGODB_URI}${process.env.APPLICATION_NAME}`)
 
         // connection established
         console.log(chalk.greenBright(`\nDatabase Connected : ${connectionInstance.connection.host}`))
