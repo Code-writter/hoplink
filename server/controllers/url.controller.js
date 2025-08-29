@@ -45,9 +45,25 @@ const handleRedirect = async (req, res) => {
     return res.status(301).redirect(redirect.redirectURL)
 }
 
+const handleDeleteUrl = async (req, res) => {
+    const { id }  = req.params;
+
+    if(!id) throw new ApiError(400, "Url Id is required")
+
+    try {
+        await ShortUrl.deleteOne({nanoId : id})
+    } catch (error) {
+        throw new ApiError(500, "Cannot able to delete the url")
+    }
+    
+    return res.status(200).json({
+        res : "Url deleted"
+    })
+}   
 
 export {
     handleGetAllUrls,
     handleRedirect,
+    handleDeleteUrl,
     handleGenerateShortUrl
 }

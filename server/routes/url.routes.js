@@ -3,6 +3,7 @@ import {Router} from 'express'
 import { 
     handleGetAllUrls,
     handleRedirect,
+    handleDeleteUrl,
     handleGenerateShortUrl
 } from '../controllers/url.controller.js'
 
@@ -15,5 +16,8 @@ router.route("/")
 
 router.route("/:id")
 .get(handleRedirect)
+.delete(handleDeleteUrl)
+
+
 
 export default router
