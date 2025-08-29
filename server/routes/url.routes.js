@@ -4,6 +4,7 @@ import {
     handleGetAllUrls,
     handleRedirect,
     handleDeleteUrl,
+    handleUrlInfo,
     handleGenerateShortUrl
 } from '../controllers/url.controller.js'
 
@@ -17,6 +18,9 @@ router.route("/")
 router.route("/:id")
 .get(handleRedirect)
 .delete(handleDeleteUrl)
+
+router.route("/url-info/:id")
+.get(handleUrlInfo)
 
 
 

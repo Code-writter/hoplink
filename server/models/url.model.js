@@ -10,7 +10,12 @@ const urlSchema = new Schema({
     redirectURL:{
         type : String,
         required : true
-    }
+    },
+    information : [{
+        timestamp : {
+            type : Number
+        }
+    }]
 }, {
     timestamps : true
 })
