@@ -24,7 +24,7 @@ app.use(bodyParser.json())
 
 app.get("/", (req, res) => {
     console.log("Server is working")
-
+    
     return res.status(200).json({
         msg : "Server is working"
     })
