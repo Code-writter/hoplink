@@ -1,6 +1,7 @@
 import {Router} from 'express'
 import { 
     getUserDetails, 
+    handleLoginUser, 
     handleRegisterUser
 } from '../controllers/user.controller.js'
 const router = Router()
@@ -8,8 +9,9 @@ const router = Router()
 
 router.route("/")
 .get(getUserDetails)
-.post(handleRegisterUser)
 
+router.route("/register").post(handleRegisterUser)
+router.route("/login").post(handleLoginUser)
 
 
 export default router 
