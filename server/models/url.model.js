@@ -15,7 +15,13 @@ const urlSchema = new Schema({
         timestamp : {
             type : Number
         }
-    }]
+    }],
+
+    owner : {
+        type : Schema.Types.ObjectId,
+        ref : "User"
+    },
+    
 }, {
     timestamps : true
 })

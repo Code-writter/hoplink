@@ -4,7 +4,11 @@ import {ApiError} from '../utils/ApiErrors.js'
 
 
 const handleGetAllUrls =  async (req, res) => {
-    const all_redirect_urls = await ShortUrl.find({})
+    const {id} = req.params.id
+    const all_redirect_urls = await ShortUrl.find({
+        owner : id
+    })
+
     if(!all_redirect_urls) throw new ApiError(500, "Urls not found in the database")
 
     return res.status(200).json({
@@ -14,6 +18,7 @@ const handleGetAllUrls =  async (req, res) => {
 
 const handleGenerateShortUrl = async (req, res) => {
     const { redirectURL } = req.body;
+    const {id} = req.headers
     const nanoId = nanoid(8)
 
     if( !redirectURL || !nanoId ) throw new ApiError(500, "Redirect Url and Nano Id is required ")

@@ -2,6 +2,9 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiErrors.js"
 
 
+
+
+
 const getUserDetails = (req, res) => {
     return res.json({
         msg : "get User detials"
