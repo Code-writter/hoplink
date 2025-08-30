@@ -2,7 +2,24 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiErrors.js"
 
 
+const generateAccessTokenAndRefreshToken = async (userId) => {
+    try {
+        const user = await User.findById(userId);
 
+        const accessToken = user.generateAccessToken();
+        const refreshToken = user.generateRefreshToken();
+
+        // Save refreshToken in the database
+
+        user.refreshToken = refreshToken;
+
+        await user.save({validateBeforeSave : false})
+
+        return { accessToken, refreshToken }
+    } catch (error) {
+        throw new ApiError(500, `Something went wrong while generating the Access Token and refresh Token : ${error.message}`)
+    }
+}
 
 
 const getUserDetails = (req, res) => {
@@ -49,6 +66,8 @@ const handleRegisterUser = async (req, res) => {
         created_user
     })
 }
+
+
 
 export {
     getUserDetails,
