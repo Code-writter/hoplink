@@ -106,9 +106,35 @@ const handleLoginUser = async (req, res) => {
 }
 
 
+const handleLogoutUser = async (req, res) => {
+    const id = req.user._id
+    await User.findByIdAndUpdate(id, {
+        $set : {
+            refreshToken : undefined
+        }
+    }, {
+        // will instead give you the object after update was applied
+        new : true
+    })
+
+    const optionsForCookie = {
+        httpOnly: true,
+        secure: true
+    };
+
+    return res
+    .status(200)
+    .cookie("accessToken", optionsForCookie)
+    .cookie("refreshToken", optionsForCookie)
+    .json({
+        msg : "User Logged Out"
+    })
+}
+
 
 export {
     getUserDetails,
     handleRegisterUser,
-    handleLoginUser
+    handleLoginUser,
+    handleLogoutUser
 }
