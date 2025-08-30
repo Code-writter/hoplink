@@ -1,44 +1,43 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-
-import cors from 'cors'
-const app = express()
+import express from "express";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser"
+import cors from "cors";
+const app = express();
 
 // Middlewares
 
-app.use(cors({
-    origin : process.env.CORS_ORIGIN,
-    credentials : true
-}))
+app.use(
+    cors({
+        origin: process.env.CORS_ORIGIN,
+        credentials: true,
+    })
+);
 
 // app.use(express.urlencoded({
 //     extended : true
 // }))
 
-app.use(bodyParser.urlencoded())
-app.use(bodyParser.json())
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
+app.use(cookieParser())
 // cookie parser
 // app.use()
 
-
-
 app.get("/", (req, res) => {
-    console.log("Server is working")
-    
-    return res.status(200).json({
-        msg : "Server is working"
-    })
-})
+    console.log("Server is working");
 
+    return res.status(200).json({
+        msg: "Server is working",
+    });
+});
 
 // Routes
-import userRoutes from './routes/user.routes.js'
-import urlRoutes from "./routes/url.routes.js"
+import userRoutes from "./routes/user.routes.js";
+import urlRoutes from "./routes/url.routes.js";
+
+
 
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/url", urlRoutes);
 
-
-
-
-export default app
+export default app;
