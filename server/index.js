@@ -1,31 +1,33 @@
+import dotenv from "dotenv";
+import chalk from "chalk";
 
-import dotenv from 'dotenv'
-import chalk from 'chalk'
+import app from "./app.js";
+import connectDB from "./database/connectDB.js";
 
-import app from './app.js'
-import connectDB from './database/connectDB.js'
+dotenv.config();
 
-dotenv.config()
-
-const PORT = process.env.PORT || 8000
-
-
+const PORT = process.env.PORT || 8000;
 
 connectDB()
-.then(() => {
-    // After connectin db we will start the server
-    app.listen(PORT, () => {
-        console.log(chalk.blueBright(`\nServer started at : http://localhost:${PORT}`))
-    })
+    .then(() => {
+        // After connectin db we will start the server
+        app.listen(PORT, () => {
+            console.log(
+                chalk.blueBright(
+                    `\nServer started at : http://localhost:${PORT}`
+                )
+            );
+        });
 
-    // Global Cathes
-    app.on( "ERROR :",(error)  => {
-        console.log(chalk.bgRedBright(`Error : ${error.message}`))
-        throw error
+        // Global Cathes
+        app.on("ERROR :", (error) => {
+            console.log(chalk.bgRedBright(`Error : ${error.message}`));
+            throw error;
+        });
     })
-})
-.catch((error) => {
-    console.log(chalk.bgRedBright(`Database connection Error : ${error.message}`))
-    return error
-}) 
-
+    .catch((error) => {
+        console.log(
+            chalk.bgRedBright(`Database connection Error : ${error.message}`)
+        );
+        return error;
+    });

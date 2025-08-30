@@ -1,27 +1,19 @@
-import {Router} from 'express'
+import { Router } from "express";
 
-import { 
+import {
     handleGetAllUrls,
     handleRedirect,
     handleDeleteUrl,
     handleUrlInfo,
-    handleGenerateShortUrl
-} from '../controllers/url.controller.js'
+    handleGenerateShortUrl,
+} from "../controllers/url.controller.js";
 
-const router = Router()
+const router = Router();
 
+router.route("/").get(handleGetAllUrls).post(handleGenerateShortUrl);
 
-router.route("/")
-.get(handleGetAllUrls)
-.post(handleGenerateShortUrl)
+router.route("/:id").get(handleRedirect).delete(handleDeleteUrl);
 
-router.route("/:id")
-.get(handleRedirect)
-.delete(handleDeleteUrl)
+router.route("/url-info/:id").get(handleUrlInfo);
 
-router.route("/url-info/:id")
-.get(handleUrlInfo)
-
-
-
-export default router
+export default router;

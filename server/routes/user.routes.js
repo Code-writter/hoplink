@@ -1,15 +1,21 @@
-import {Router} from 'express'
-import { 
-    getUserDetails, 
-    handleRegisterUser
-} from '../controllers/user.controller.js'
-const router = Router()
+import { Router } from "express";
+import {
+    getUserDetails,
+    handleLoginUser,
+    handleLogoutUser,
+    handleRegisterUser,
+} from "../controllers/user.controller.js";
 
-
-router.route("/")
-.get(getUserDetails)
-.post(handleRegisterUser)
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 
 
-export default router 
+const router = Router();
+
+router.route("/").get(getUserDetails);
+
+router.route("/register").post(handleRegisterUser);
+router.route("/login").post(handleLoginUser);
+router.route("/logout").post(verifyJWT, handleLogoutUser);
+
+export default router;
