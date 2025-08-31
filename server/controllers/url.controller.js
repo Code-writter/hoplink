@@ -2,10 +2,11 @@ import { ShortUrl } from "../models/url.model.js";
 import { nanoid } from "nanoid";
 import { ApiError } from "../utils/ApiErrors.js";
 
-const handleGetAllUrls = async (req, res) => {
-    const { id } = req.params.id;
+const handleGetAllUrlsByUser = async (req, res) => {
+    const owner = req.user._id;
+
     const all_redirect_urls = await ShortUrl.find({
-        owner: id,
+        owner: owner,
     });
 
     if (!all_redirect_urls)
@@ -17,8 +18,9 @@ const handleGetAllUrls = async (req, res) => {
 };
 
 const handleGenerateShortUrl = async (req, res) => {
+    const owner = req.user._id
     const { redirectURL } = req.body;
-    const { id } = req.headers;
+
     const nanoId = nanoid(8);
 
     if (!redirectURL || !nanoId)
@@ -27,6 +29,7 @@ const handleGenerateShortUrl = async (req, res) => {
     const newRedirectUrl = await ShortUrl.create({
         nanoId: nanoId,
         redirectURL: redirectURL,
+        owner : owner,
         information: [],
     });
 
@@ -83,10 +86,14 @@ const handleDeleteUrl = async (req, res) => {
 
 const handleUrlInfo = async (req, res) => {
     const id = req.params.id;
-
+    const owner = req.user._id
+    
     if (!id) throw new ApiError(400, "Id is required");
 
-    const urlInfo = await ShortUrl.findById(id);
+    const urlInfo = await ShortUrl.findById({
+        _id : id,
+        owner : owner
+    });
 
     if (!urlInfo) throw new ApiError(404, "Url Info not found");
 
@@ -94,7 +101,7 @@ const handleUrlInfo = async (req, res) => {
 };
 
 export {
-    handleGetAllUrls,
+    handleGetAllUrlsByUser,
     handleRedirect,
     handleDeleteUrl,
     handleUrlInfo,

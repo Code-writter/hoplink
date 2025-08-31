@@ -72,7 +72,7 @@ userSchema.methods.generateRefreshToken = function () {
 
     const secret = process.env.REFRESH_TOKEN_SECRET;
     const expiryDate = process.env.REFRESH_TOKEN_EXPIRY;
-    const token = jwt.sign(payload, secret, { expiresIn: expiryDate });
+    const token = jwt.sign(payload, secret, { expiresIn: expiryDate});
     return token;
 };
 
