@@ -1,9 +1,14 @@
-import { ModeToggle } from "./components/mode-toggle";
+import FooterSection from "./components/footer";
+import { HeroHeader } from "./components/header";
+import HeroSection from "./components/hero-section";
+
 
 export default function App(){
     return(
         <div>
-           <ModeToggle key={"jdkf"}  />
+           <HeroHeader />
+            <HeroSection />
+           <FooterSection />
         </div>
     )
 }
